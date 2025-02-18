@@ -3,11 +3,17 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=18.0.0",
+    "yarn": ">=4.0.0"
+  },
+  "packageManager": "yarn@4.2.2",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
+    "start": "vite preview --host --port $PORT",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write --list-different ."
   },
   "dependencies": {
@@ -72,6 +78,5 @@
     "vite": "^5.2.0",
     "vite-plugin-pwa": "^0.20.0",
     "web-vitals": "^3.5.2"
-  },
-  "packageManager": "yarn@4.2.2"
+  }
 }

@@ -1,3 +1,42 @@
+# Dependency directories
+node_modules/
+
+# Package manager files - solo permitir yarn.lock
+package-lock.json
+pnpm-lock.yaml
+.pnp.*
+.npm
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.production
+
+# Build output
+dist/
+dev-dist/
+dist-ssr/
+
+# Editor directories
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+
 # Logs
 logs
 *.log
@@ -6,45 +45,6 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-
-
-node_modules
-dist
-dev-dist
-dist-ssr
-*.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-.env
-
-# IDEs
-.vscode/
-.vim/
-
-# ------- yarn -------
-# see excellent notes at: https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
-# Also: `yarn.lock` and `.yarnrc.yml` (or it's older counterpart .yarnrc) "should always be stored in your repo"
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
-
-## --> ADD if using zero-install, otherwise do NOT:
-#!.yarn/cache
-
-## --> ELSE ADD if NOT using yarn's zero-install:
-.pnp.*
 
 # Local Netlify folder
 .netlify
