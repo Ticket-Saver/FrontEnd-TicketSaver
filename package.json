@@ -7,7 +7,6 @@
     "node": "18.x",
     "npm": "10.x"
   },
-  "packageManager": "yarn@4.2.2",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
