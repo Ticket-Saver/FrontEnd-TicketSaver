@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
 
 const EventDetails = () => {
-  const { eventName, eventId, eventDate, eventLabel } = useParams()
+  const { eventName } = useParams()
 
   return (
     <div className="container mx-auto p-4">

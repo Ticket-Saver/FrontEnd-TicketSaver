@@ -59,32 +59,6 @@ export const eventData: EventData = {
       zones: ['Orange', 'Green', 'Pink', 'Blue', 'Yellow', 'Purple'],
       priceTag: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6']
     }
-    /* loge: {
-      zones: [
-        'Yellow',
-        'Purple',
-        'Gray',
-        'Section 1',
-        'Section 2',
-        'Section 3',
-        'Section 4',
-        'Section 5',
-        'Section 6'
-      ],
-      priceTag: ['P4', 'P5', 'P6', 'P3', 'P3', 'P4', 'P4', 'P4', 'P4']
-    }*/
-  },
-  map1: {
-    orchestra: {
-      zones: ['Orange', 'Green', 'Pink', 'Blue', 'Yellow', 'Purple'],
-      priceTag: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6']
-    }
-  },
-  map2: {
-    Map: {
-      zones: ['Purple', 'Green', 'Blue', 'Red', 'Orange', 'Brown'],
-      priceTag: ['P1', 'P2', 'P5', 'P3', 'P4', 'P6']
-    }
   },
   india_yuridia02: {
     Map: {
@@ -138,14 +112,4 @@ export const mapConfig: MapConfig = {
       }
     }
   }
-}
-
-export const mapData = {
-  map1: {
-    // ... configuración del mapa 1
-  },
-  map2: {
-    // ... configuración del mapa 2
-  }
-  // Elimina las duplicaciones de map1 y map2
 }
