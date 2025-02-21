@@ -5,14 +5,15 @@
   "type": "module",
   "engines": {
     "node": "18.x",
-    "yarn": "4.2.2"
+    "npm": "10.x"
   },
   "packageManager": "yarn@4.2.2",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "start": "vite preview --host --port ${PORT:-3000}",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css,md}\""

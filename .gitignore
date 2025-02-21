@@ -1,31 +1,27 @@
 # Dependency directories
 node_modules/
 
-# Package manager files - solo permitir yarn.lock
-package-lock.json
-pnpm-lock.yaml
+# Package manager files
+yarn.lock
+.yarn/
+.yarnrc.yml
 .pnp.*
-.npm
-
-# Yarn
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
-.pnp.*
-
-# Environment files
-.env
-.env.local
-.env.development
-.env.production
 
 # Build output
 dist/
 dev-dist/
-dist-ssr/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # Editor directories
 .vscode/
@@ -40,9 +36,6 @@ dist-ssr/
 # Logs
 logs
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
