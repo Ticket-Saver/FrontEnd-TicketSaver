@@ -30,9 +30,23 @@ export default defineConfig({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
       workbox: {
-        clientsClaim: true,
+        maximumFileSizeToCacheInBytes: 6 * 1024 * 1024, // 6MB
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
         skipWaiting: true,
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}']
+        clientsClaim: true,
+        runtimeCaching: [
+          {
+            urlPattern: /\.(png|jpg|jpeg|svg|gif)$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'images',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 30 * 24 * 60 * 60 // 30 días
+              }
+            }
+          }
+        ]
       },
       devOptions: {
         enabled: true
@@ -46,34 +60,35 @@ export default defineConfig({
             src: 'pwa-512x512.png',
             sizes: '512x512',
             type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: 'pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'maskable'
+            purpose: 'any maskable'
           }
         ]
       }
     })
   ],
-  server: {
-    proxy: {
-      '/api': {
-        target: 'https://localhost:8443',
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/api/, '/api'),
-        configure: (proxy, _options) => {
-          proxy.on('error', (err, _req, _res) => {
-            console.log('proxy error', err);
-          });
-          proxy.on('proxyReq', (proxyReq, req, _res) => {
-            proxyReq.setHeader('Origin', 'https://localhost:8443');
-          });
+  build: {
+    chunkSizeWarningLimit: 4000, // 4MB
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: [
+            'react',
+            'react-dom',
+            'react-router-dom',
+            '@auth0/auth0-react',
+            '@tanstack/react-query'
+          ],
+          images: [
+            './src/assets/maps/IndiaYuridia/sanjose_ca.png',
+            './src/assets/carouselImg/artistAlebrije.png',
+            './src/assets/events/IndiaYuridia.png'
+          ]
         }
       }
     }
+  },
+  server: {
+    host: true,
+    port: Number(process.env.PORT) || 3000
   }
 })

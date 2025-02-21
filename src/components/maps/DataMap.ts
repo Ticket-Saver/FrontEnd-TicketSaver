@@ -118,54 +118,6 @@ export const mapConfig: MapConfig = {
       }
     }
   },
-  map1: {
-    zones: {
-      orchestra: {
-        defaultMap: OrchestraMap,
-        src: OrchestraMap2
-      },
-      loge: {
-        defaultMap: LogeMap,
-        src: LogeMapPng
-      }
-    }
-  },
-  map2: {
-    zones: {
-      orchestra: {
-        defaultMap: OrchestraMap,
-        src: OrchestraMap2
-      },
-      loge: {
-        defaultMap: LogeMap,
-        src: LogeMapPng
-      }
-    }
-  },
-  map1: {
-    zones: {
-      orchestra: {
-        defaultMap: OrchestraMap,
-        src: OrchestraMap2
-      },
-      loge: {
-        defaultMap: LogeMap,
-        src: LogeMapPng
-      }
-    }
-  },
-  map2: {
-    zones: {
-      orchestra: {
-        defaultMap: OrchestraMap,
-        src: OrchestraMap2
-      },
-      loge: {
-        defaultMap: LogeMap,
-        src: LogeMapPng
-      }
-    }
-  },
   'india_yuridia.01': {
     zones: {
       orchestra: {
@@ -186,4 +138,14 @@ export const mapConfig: MapConfig = {
       }
     }
   }
+}
+
+export const mapData = {
+  map1: {
+    // ... configuración del mapa 1
+  },
+  map2: {
+    // ... configuración del mapa 2
+  }
+  // Elimina las duplicaciones de map1 y map2
 }
