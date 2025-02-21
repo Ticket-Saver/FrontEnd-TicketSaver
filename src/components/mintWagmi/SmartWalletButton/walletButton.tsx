@@ -7,7 +7,7 @@ export function BlueCreateWalletButton() {
 
   const createWallet = useCallback(() => {
     const coinbaseWalletConnector = connectors.find(
-      (connector) => connector.id === 'coinbaseWalletSDK'
+      connector => connector.id === 'coinbaseWalletSDK'
     )
     if (coinbaseWalletConnector) {
       connect({ connector: coinbaseWalletConnector })
@@ -15,7 +15,7 @@ export function BlueCreateWalletButton() {
   }, [connectors, connect])
 
   return (
-    <button className='btn btn-primary btn-outline px-3' onClick={createWallet}>
+    <button className="btn btn-primary btn-outline px-3" onClick={createWallet}>
       <CoinbaseWalletLogo />
       Create Wallet
     </button>

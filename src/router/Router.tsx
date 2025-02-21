@@ -37,29 +37,29 @@ const ProtectedRoute = ({ element }: { element: ReactNode }) => {
     })
     return null
   }
-  return isAuthenticated ? element : <Navigate to='/' />
+  return isAuthenticated ? element : <Navigate to="/" />
 }
 
 export const AppRouter = () => (
   <Router>
     <Routes>
       <Route
-        path='/'
+        path="/"
         element={
           <LayoutHeaderFooter>
             <HomeUnlogin />
           </LayoutHeaderFooter>
         }
       />
-<Route path="/success" element={<SuccessCheckout />} />
-      <Route path='/checkout' element={<ProtectedRoute element={<CheckoutPage />} />} />
+      <Route path="/success" element={<SuccessCheckout />} />
+      <Route path="/checkout" element={<ProtectedRoute element={<CheckoutPage />} />} />
 
-      <Route path='return' element={<ReturnPage />} />
+      <Route path="return" element={<ReturnPage />} />
 
-      <Route path='/protected' element={<ProtectedRoute element={<ProtectedPage />} />} />
+      <Route path="/protected" element={<ProtectedRoute element={<ProtectedPage />} />} />
 
       <Route
-        path='/footer/contact'
+        path="/footer/contact"
         element={
           <LayoutHeaderFooter>
             <Contact />
@@ -68,7 +68,7 @@ export const AppRouter = () => (
       />
 
       <Route
-        path='/footer/terms&conditions'
+        path="/footer/terms&conditions"
         element={
           <LayoutHeaderFooter>
             <TermsConditionPage />
@@ -77,7 +77,7 @@ export const AppRouter = () => (
       />
 
       <Route
-        path='/footer/PrivayPolicy'
+        path="/footer/PrivayPolicy"
         element={
           <LayoutHeaderFooter>
             <PrivayPolicyPage />
@@ -86,7 +86,7 @@ export const AppRouter = () => (
       />
 
       <Route
-        path='/footer/PCICompliance'
+        path="/footer/PCICompliance"
         element={
           <LayoutHeaderFooter>
             <PCICompliancePage />
@@ -95,7 +95,7 @@ export const AppRouter = () => (
       />
 
       <Route
-        path='/faqs'
+        path="/faqs"
         element={
           <LayoutHeaderFooter>
             <FaqsPage />
@@ -104,7 +104,7 @@ export const AppRouter = () => (
       />
 
       <Route
-        path='/about'
+        path="/about"
         element={
           <LayoutHeaderFooter>
             <AboutPage />
@@ -113,7 +113,7 @@ export const AppRouter = () => (
       />
 
       <Route
-        path='/events'
+        path="/events"
         element={
           <LayoutHeaderFooter>
             <EventPage />
@@ -122,7 +122,7 @@ export const AppRouter = () => (
       />
 
       <Route
-        path='/event/:name/:venue/:date/:label/:delete?'
+        path="/event/:name/:venue/:date/:label/:delete?"
         element={
           <LayoutHeaderFooter>
             <EventSalePage />{' '}
@@ -131,7 +131,7 @@ export const AppRouter = () => (
       />
 
       <Route
-        path='/sale/:name/:venue/:location/:date/:label/:delete?'
+        path="/sale/:name/:venue/:location/:date/:label/:delete?"
         element={
           <ProtectedRoute
             element={
@@ -144,7 +144,7 @@ export const AppRouter = () => (
       />
 
       <Route
-        path='/dashboard'
+        path="/dashboard"
         element={
           <ProtectedRoute
             element={
@@ -155,15 +155,15 @@ export const AppRouter = () => (
           />
         }
       >
-        <Route path='profile' element={<MyProfile />} />
-        <Route path='tickets' element={<MyTickets />}>
-          <Route path='upcomingevent' element={<UpcomingEvent />} />
-          <Route path='pastevent' element={<PastEvent />} />
-          <Route path='collectibles' element={<Collectibles />} />
+        <Route path="profile" element={<MyProfile />} />
+        <Route path="tickets" element={<MyTickets />}>
+          <Route path="upcomingevent" element={<UpcomingEvent />} />
+          <Route path="pastevent" element={<PastEvent />} />
+          <Route path="collectibles" element={<Collectibles />} />
         </Route>
-        <Route path='settings' element={<MySettings />} />
-        <Route path='help' element={<YouNeedHelp />} />
-        <Route path='web3' element={<Web3 />} />
+        <Route path="settings" element={<MySettings />} />
+        <Route path="help" element={<YouNeedHelp />} />
+        <Route path="web3" element={<Web3 />} />
       </Route>
     </Routes>
   </Router>

@@ -118,7 +118,7 @@ export const mapConfig: MapConfig = {
       }
     }
   },
-  'map1': {
+  map1: {
     zones: {
       orchestra: {
         defaultMap: OrchestraMap,
@@ -130,7 +130,7 @@ export const mapConfig: MapConfig = {
       }
     }
   },
-  'map2': {
+  map2: {
     zones: {
       orchestra: {
         defaultMap: OrchestraMap,
@@ -142,7 +142,7 @@ export const mapConfig: MapConfig = {
       }
     }
   },
-  'map1': {
+  map1: {
     zones: {
       orchestra: {
         defaultMap: OrchestraMap,
@@ -154,7 +154,7 @@ export const mapConfig: MapConfig = {
       }
     }
   },
-  'map2': {
+  map2: {
     zones: {
       orchestra: {
         defaultMap: OrchestraMap,

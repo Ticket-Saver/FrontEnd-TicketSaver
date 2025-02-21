@@ -34,7 +34,7 @@ const Seatchart = forwardRef<SeatchartJS | undefined, SeatchartProps>(
 
     return (
       <div
-        className='relative overflow-x-auto w-full max-w-full h-[500px] w-[600px] x-sm:w-full x-sm:px-6 lg:mb-0'
+        className="relative overflow-x-auto w-full max-w-full h-[500px] w-[600px] x-sm:w-full x-sm:px-6 lg:mb-0"
         ref={elementRef}
       />
     )

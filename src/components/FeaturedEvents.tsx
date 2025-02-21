@@ -48,7 +48,7 @@ export default function FeaturedEvents() {
   const token = import.meta.env.VITE_GITHUB_TOKEN
   const token2 = import.meta.env.VITE_TOKEN_HIEVENTS
 
-  const options = { 
+  const options = {
     headers: {
       Authorization: `Bearer ${token}`,
       Accept: 'application/vnd.github.v3.raw'
@@ -63,7 +63,7 @@ export default function FeaturedEvents() {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token2}`,
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           }
         })
 
@@ -135,15 +135,17 @@ export default function FeaturedEvents() {
   }
 
   return (
-    <section className='py-10 md:py-16 bg-base-300'>
-      <div className='container'>
-        <div className='text-center'>
-          <h2 className='text-3xl sm:text-5xl font-bold mb-4'>Select your city!</h2>
-          <p className='text-lg sm:text-2xl mb-6 md:mb-14'>
+    <section className="py-10 md:py-16 bg-base-300">
+      <div className="container">
+        <div className="text-center">
+          <h2 className="text-3xl sm:text-5xl font-bold mb-4">Select your city!</h2>
+          <p className="text-lg sm:text-2xl mb-6 md:mb-14">
             Don't miss out! Buy now before tickets sell out!
           </p>
         </div>
-        <div className={`grid ${events.length === 1 ? 'grid-cols-1 place-items-center' : 'sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2'} gap-6 lg:gap-8 xl:gap-10 place-items-center items-center`}>
+        <div
+          className={`grid ${events.length === 1 ? 'grid-cols-1 place-items-center' : 'sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2'} gap-6 lg:gap-8 xl:gap-10 place-items-center items-center`}
+        >
           {events.map((event, index) => (
             <Link
               style={{ width: '100%' }}
@@ -156,7 +158,7 @@ export default function FeaturedEvents() {
                 eventId={event.eventId}
                 title={event.event_name}
                 description={descriptions[event.event_label] || event.description}
-                thumbnailURL={event.images[0]?.url || "/default.jpg"}
+                thumbnailURL={event.images[0]?.url || '/default.jpg'}
                 venue={event.venue?.venue_name || event.venue_label}
                 date={new Date(event.event_date)
                   .toLocaleDateString('en-GB', optionsDate)

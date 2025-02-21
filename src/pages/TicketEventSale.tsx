@@ -57,28 +57,25 @@ export default function TicketSelection() {
       } catch (error) {
         console.error('Error loading image:', error)
         // Si no hay descripción de GitHub, intentar con la API local
- const localResponse = await fetch(
-  `${hieventsUrl}${venue}/images`, 
-   {
-     method: 'GET',
-     headers: {
-       Authorization: `Bearer ${token2}`,
-       'Content-Type': 'application/json',
-     },
-   }
- );
+        const localResponse = await fetch(`${hieventsUrl}${venue}/images`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token2}`,
+            'Content-Type': 'application/json'
+          }
+        })
 
- if (!localResponse.ok) {
-   throw new Error(`Error en la respuesta local: ${localResponse.status}`);
- }
-
- const localData = await localResponse.json();
- console.log('localData', localData)
-        if (localData.data) {
-          setImageUrl(localData.data[0].url ||'');
+        if (!localResponse.ok) {
+          throw new Error(`Error en la respuesta local: ${localResponse.status}`)
         }
 
- return;
+        const localData = await localResponse.json()
+        console.log('localData', localData)
+        if (localData.data) {
+          setImageUrl(localData.data[0].url || '')
+        }
+
+        return
       }
     }
     if (label) loadImage()
@@ -166,7 +163,7 @@ export default function TicketSelection() {
 
   useEffect(() => {
     if (label) setEventSelected(label.replace(/\./g, ''))
-      console.log('labelllll',label);
+    console.log('labelllll', label)
   }, [label])
 
   const [eventZoneSelected, setEventZoneSelected] = useState<string>('')
@@ -199,7 +196,7 @@ export default function TicketSelection() {
         eventInfo: {
           id: label,
           name: name,
-      venue: venueInfo?.venue_name || 'Venue Name Not Available',
+          venue: venueInfo?.venue_name || 'Venue Name Not Available',
           venueId: venue,
           date: date,
           location: location
@@ -279,7 +276,7 @@ export default function TicketSelection() {
 
           // Determinar el tipo de zona (orquesta o loge)
           const zoneType =
-            Object.keys(eventData[eventSelected] || {}).find((zone) =>
+            Object.keys(eventData[eventSelected] || {}).find(zone =>
               eventData[eventSelected][zone]?.zones.includes(zoneColorType_)
             ) || ''
 
@@ -296,7 +293,6 @@ export default function TicketSelection() {
             if (colorIndex !== -1) {
               priceType = zoneInfo.priceTag[colorIndex]
               price_base = (priceTagList[priceType]?.price_base || 2000) / 100
-              
             } else {
               priceType = zoneseatToPrice(zoneData.zones, seatchartCurrentArea.title, globalSeat)
               price_base = find_price(zoneData, seatchartCurrentArea.title, globalSeat)
@@ -312,7 +308,7 @@ export default function TicketSelection() {
                 return prev
               }
               const existingSeatIndex = (prev || []).findIndex(
-                (item) => item.seatLabel === e.seat.label
+                item => item.seatLabel === e.seat.label
               )
               if (existingSeatIndex !== -1) {
                 // Si el asiento ya existe, devolver el carrito actual sin cambios
@@ -357,7 +353,7 @@ export default function TicketSelection() {
       try {
         await lockSeats(lockingSeat)
 
-        setCart((prev) => prev?.filter((cart) => cart.seatLabel !== e.seat.label))
+        setCart(prev => prev?.filter(cart => cart.seatLabel !== e.seat.label))
       } catch (error) {
         console.error('Failed to unlock seat:', error)
       }
@@ -404,10 +400,10 @@ export default function TicketSelection() {
 
   const lockSeats = async (seat: any) => {
     // Simular un pequeño delay para que parezca real
-    await new Promise(resolve => setTimeout(resolve, 100));
-    
+    await new Promise(resolve => setTimeout(resolve, 100))
+
     // Log para debugging
-    console.log('Simulando bloqueo de asiento:', seat);
+    console.log('Simulando bloqueo de asiento:', seat)
 
     // Retornar una respuesta dummy exitosa
     return {
@@ -419,7 +415,7 @@ export default function TicketSelection() {
         status: 'locked',
         timestamp: new Date().toISOString()
       }
-    };
+    }
 
     /* Código original comentado para referencia futura
     try {
@@ -453,13 +449,11 @@ export default function TicketSelection() {
   const [selectedSeats, setSelectedSeats] = useState<{ seatLabel: string; seatType: string }[]>([])
 
   const onTicketClick = (ticket: { seatLabel: string; seatType: string }) => {
-    setCart((prev) =>
-      prev?.filter(
-        (cart) => cart.seatLabel !== ticket.seatLabel && cart.seatType === ticket.seatType
-      )
+    setCart(prev =>
+      prev?.filter(cart => cart.seatLabel !== ticket.seatLabel && cart.seatType === ticket.seatType)
     )
     const newSelectedSeats = selectedSeats.filter(
-      (seat) => seat.seatLabel !== ticket.seatLabel || seat.seatType !== ticket.seatType
+      seat => seat.seatLabel !== ticket.seatLabel || seat.seatType !== ticket.seatType
     )
     setSelectedSeats(newSelectedSeats)
 
@@ -470,68 +464,68 @@ export default function TicketSelection() {
   useEffect(() => {
     const selectedEventData = eventData[eventSelected]
     const zones = selectedEventData ? Object.keys(selectedEventData) : []
-   
+
     if (zones.length === 1) {
       setEventZoneSelected(zones[0])
     } else if (!eventZoneSelected) {
       setEventZoneSelected('')
     }
   }, [eventData, eventSelected])
- 
+
   return (
-    <div className='bg-base-200'> 
-      <div className='bg-base-200 relative'>
+    <div className="bg-base-200">
+      <div className="bg-base-200 relative">
         {/* Event Header */}
-        <div className='absolute inset-0'>
+        <div className="absolute inset-0">
           {/* Cover Image */}
-          <div className='relative h-96 bg-gray-800'>
+          <div className="relative h-96 bg-gray-800">
             {/* Event Profile Image */}
-            <div className='absolute inset-0 overflow-hidden'>
+            <div className="absolute inset-0 overflow-hidden">
               <img
                 src={imageUrl!}
-                alt='Event banner'
-                className='w-full h-full object-cover overflow-hidden  object-top  mx-auto p-[10px] rounded-[40px]'
+                alt="Event banner"
+                className="w-full h-full object-cover overflow-hidden  object-top  mx-auto p-[10px] rounded-[40px]"
               />
             </div>
           </div>
         </div>
 
         {/* Main Content */}
-        <div className=' max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8'>
+        <div className=" max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
           {/* Event Description */}
-          <div className='text-primary-content relative'>
-            <h1 className='text-6xl font-bold mb-4 bg-black bg-opacity-50 text-neutral-content rounded-lg px-10 py-2 inline-block max-w-full text-left mx-auto '>
+          <div className="text-primary-content relative">
+            <h1 className="text-6xl font-bold mb-4 bg-black bg-opacity-50 text-neutral-content rounded-lg px-10 py-2 inline-block max-w-full text-left mx-auto ">
               {name}
             </h1>
-            <div className='block'>
+            <div className="block">
               {venueInfo ? (
-                <h2 className='text-4xl mb-4 bg-black bg-opacity-50 text-neutral-content rounded-lg px-10 py-2 inline-block max-w-full text-left mx-auto'>
+                <h2 className="text-4xl mb-4 bg-black bg-opacity-50 text-neutral-content rounded-lg px-10 py-2 inline-block max-w-full text-left mx-auto">
                   {venueInfo.venue_name}, {location}
                 </h2>
               ) : (
-                <h2 className='text-4xl mb-4 bg-black bg-opacity-50 text-neutral-content rounded-lg px-10 py-2 inline-block max-w-full text-left mx-auto'></h2>
+                <h2 className="text-4xl mb-4 bg-black bg-opacity-50 text-neutral-content rounded-lg px-10 py-2 inline-block max-w-full text-left mx-auto"></h2>
               )}
             </div>
-            <div className='ml-auto sm:w-full md:w-96 text-black bg-white rounded-lg shadow-sm p-6'>
-              <h2 className='text-lg font-bold mb-6'>Ticket Prices</h2>
+            <div className="ml-auto sm:w-full md:w-96 text-black bg-white rounded-lg shadow-sm p-6">
+              <h2 className="text-lg font-bold mb-6">Ticket Prices</h2>
               {/* Static Table */}
-              <table className='w-full gap-y-2'>
+              <table className="w-full gap-y-2">
                 <thead>
                   <tr>
-                    <th className='text-left'>Type</th>
-                    <th className='text-center'></th>
+                    <th className="text-left">Type</th>
+                    <th className="text-center"></th>
 
-                    <th className='text-right'>Price</th>
+                    <th className="text-right">Price</th>
                   </tr>
                 </thead>
                 <tbody>
                   {/* Static ticket data */}
-                  {zonePriceList.map((zoneItem) => (
+                  {zonePriceList.map(zoneItem => (
                     <tr key={zoneItem.zone}>
-                      <th className='text-left font-normal'>{zoneItem.zone}</th>
-                      <th className='text-center font-normal'>Starting prices from</th>
+                      <th className="text-left font-normal">{zoneItem.zone}</th>
+                      <th className="text-center font-normal">Starting prices from</th>
                       <th>
-                        <a className='font-bold' style={{ fontSize: '14px' }}>
+                        <a className="font-bold" style={{ fontSize: '14px' }}>
                           {' '}
                           $
                           {Math.min(...zoneItem.prices.map((price: any) => price.priceFinal)) /
@@ -547,30 +541,30 @@ export default function TicketSelection() {
           </div>
         </div>
       </div>
-      <div className='bg-base-200  max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8'>
+      <div className="bg-base-200  max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         {/* Event Description */}
-        <div className='relative justify-center text-black'>
+        <div className="relative justify-center text-black">
           {/* Selection Elements */}
-          <div className='md:flex sm:flex-row justify-left w-full bg-white rounded-lg p-4  m-4 mx-auto'>
-            <div className='w-full md:w-1/2 px-8'>
-              <h2 className='text-4xl font-bold mb-10'>Choose your tickets</h2>
+          <div className="md:flex sm:flex-row justify-left w-full bg-white rounded-lg p-4  m-4 mx-auto">
+            <div className="w-full md:w-1/2 px-8">
+              <h2 className="text-4xl font-bold mb-10">Choose your tickets</h2>
               {/* Ticket Type */}
               <div>
                 {Object.keys(eventData[eventSelected] || {}).length > 1 && (
-                  <div className='mb-4'>
-                    <label htmlFor='ticketType' className='block text-xl mb-4 font-bold'>
+                  <div className="mb-4">
+                    <label htmlFor="ticketType" className="block text-xl mb-4 font-bold">
                       Select a Venue Floor
                     </label>
-                  
-                    <select 
-                      id='ticketType'
-                      name='ticketType'
+
+                    <select
+                      id="ticketType"
+                      name="ticketType"
                       value={eventZoneSelected}
-                      onChange={(e) => setEventZoneSelected(e.target.value)}
-                      className='mt-1 bg-white block w-3/4 pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md'
+                      onChange={e => setEventZoneSelected(e.target.value)}
+                      className="mt-1 bg-white block w-3/4 pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
                     >
-                      <option value=''>Select zone</option>
-                      {Object.keys(eventData[eventSelected] || {}).map((zone) => (
+                      <option value="">Select zone</option>
+                      {Object.keys(eventData[eventSelected] || {}).map(zone => (
                         <option key={zone} value={zone}>
                           {zone.charAt(0).toUpperCase() + zone.slice(1)}
                         </option>
@@ -578,15 +572,15 @@ export default function TicketSelection() {
                     </select>
                   </div>
                 )}
-                <div className='w-full justify-center items-center'>
+                <div className="w-full justify-center items-center">
                   {eventZoneSelected !== '' && (
                     <>
-                      <div className='mt-4 font-bold text-xl'>
+                      <div className="mt-4 font-bold text-xl">
                         Click on the map to select a Zone
                       </div>
                       <InteractiveMap
                         key={eventZoneSelected}
-                        handleClickImageZone={async (area) => {
+                        handleClickImageZone={async area => {
                           try {
                             const parsedSeats = await handleGetAreaSeats(area.title, label)
 
@@ -617,9 +611,9 @@ export default function TicketSelection() {
             </div>
 
             {seatchartCurrentOptions && (
-              <div className='mt-4 w-auto'>
-                <div className='bg-gray-300 rounded-xl p-4  m-4'>
-                  <div className='text-xl font-bold'>Select your seat</div>
+              <div className="mt-4 w-auto">
+                <div className="bg-gray-300 rounded-xl p-4  m-4">
+                  <div className="text-xl font-bold">Select your seat</div>
                   <Seatchart
                     options={seatchartCurrentOptions}
                     ref={seatchartRef}
@@ -631,9 +625,9 @@ export default function TicketSelection() {
           </div>
 
           {/* Receipt */}
-          <div className='w-full p-4'>
-            <div className='bg-white rounded-lg shadow-md p-6'>
-              <h2 className='text-2xl font-bold mb-4'>Summary</h2>
+          <div className="w-full p-4">
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <h2 className="text-2xl font-bold mb-4">Summary</h2>
               {cart?.length > 0 ? (
                 <>
                   {cart?.map((ticket, index) => {
@@ -643,7 +637,7 @@ export default function TicketSelection() {
                         className={`mb-4 pb-4 border-b-2 border-gray flex justify-between flex-row`}
                       >
                         <div>
-                          <a className='pr-5'>
+                          <a className="pr-5">
                             Ticket {ticket.subZone} -{' '}
                             {ticket.seatLabel.includes('♿')
                               ? `${ticket.seatLabel} - ADA`
@@ -654,7 +648,7 @@ export default function TicketSelection() {
                                   : ticket.seatLabel}{' '}
                           </a>
                           <button
-                            className='btn btn-circle bg-red-700 text-white'
+                            className="btn btn-circle bg-red-700 text-white"
                             onClick={() => {
                               const sessionIdCookie = getCookie('sessionId')
                               const lockingSeat = {
@@ -672,31 +666,31 @@ export default function TicketSelection() {
                             X
                           </button>
 
-                          <p className='font-bold'>Ticket Total</p>
+                          <p className="font-bold">Ticket Total</p>
                         </div>
 
                         <div>
                           <br />
                           <br />
-                          <p className='font-bold'>${ticket.price_final.toFixed(2)} USD</p>
+                          <p className="font-bold">${ticket.price_final.toFixed(2)} USD</p>
                         </div>
                       </div>
                     )
                   })}
 
                   {/* Total Cost */}
-                  <div className='mt-8 flex justify-between'>
+                  <div className="mt-8 flex justify-between">
                     <div>
-                      <p className='text-xl font-bold'>Total</p>
+                      <p className="text-xl font-bold">Total</p>
                     </div>
                     <div>
-                      <p className='text-xl font-bold'>${totalCost.toFixed(2)} USD</p>
+                      <p className="text-xl font-bold">${totalCost.toFixed(2)} USD</p>
                     </div>
                   </div>
                   {/* Proceed to Checkout Button */}
-                  <div className='flex justify-center'>
+                  <div className="flex justify-center">
                     <button
-                      className='bg-green-500 w-1/3 hover:bg-green-600 text-white py-2 px-4 rounded mt-4'
+                      className="bg-green-500 w-1/3 hover:bg-green-600 text-white py-2 px-4 rounded mt-4"
                       onClick={() => handleCheckout()}
                       disabled={!cart || cart.length == 0 || cart.length > 10}
                     >
@@ -705,7 +699,7 @@ export default function TicketSelection() {
                   </div>
                 </>
               ) : (
-                <div className='text-red-600 text-xl font-bold'>
+                <div className="text-red-600 text-xl font-bold">
                   {' '}
                   You haven't selected any tickets yet!
                 </div>

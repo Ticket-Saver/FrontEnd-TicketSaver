@@ -46,7 +46,7 @@ export function MintNFT() {
   }
 
   return (
-    <div className=''>
+    <div className="">
       <button
         className={`btn btn-primary btn-outline px-10 ${
           isPending
@@ -61,13 +61,13 @@ export function MintNFT() {
         {!isConnected ? 'Mint NFT' : isPending ? 'Confirming...' : 'Mint NFT'}
       </button>
 
-      {hash && <div className='mt-2 text-sm sm:text-base'>Transaction Hash: {hash}</div>}
-      {isConfirming && <div className='mt-2 text-sm sm:text-base'>Waiting for confirmation...</div>}
+      {hash && <div className="mt-2 text-sm sm:text-base">Transaction Hash: {hash}</div>}
+      {isConfirming && <div className="mt-2 text-sm sm:text-base">Waiting for confirmation...</div>}
       {isConfirmed && (
-        <div className='mt-2 text-sm sm:text-base'>Transaction confirmed. Your NFT is minted!</div>
+        <div className="mt-2 text-sm sm:text-base">Transaction confirmed. Your NFT is minted!</div>
       )}
       {error && (
-        <div className='mt-2 p-2 bg-red-400 rounded-lg'>
+        <div className="mt-2 p-2 bg-red-400 rounded-lg">
           Error: {(error as BaseError)?.shortMessage || error.message}
         </div>
       )}

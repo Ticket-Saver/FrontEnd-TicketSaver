@@ -65,7 +65,7 @@ export default function EventPage() {
 
       console.log('currentDate', currentDate)
 
-      filteredEvents = eventsArray.filter((event) => {
+      filteredEvents = eventsArray.filter(event => {
         if (event.event_deleted_at) {
           return false
         }
@@ -93,8 +93,8 @@ export default function EventPage() {
   }, [data2])
 
   useEffect(() => {
-    const combinedData = events.map((event) => {
-      const venue = venues.find((v) => v.venue_label === event.venue_label)
+    const combinedData = events.map(event => {
+      const venue = venues.find(v => v.venue_label === event.venue_label)
       return { ...event, venue }
     })
     setEventsWithVenues(combinedData)
@@ -168,11 +168,11 @@ export default function EventPage() {
     timeZone: 'UTC'
   }
   return (
-    <section className='py-10 md:py-16 bg-base-300'>
-      <div className='container'>
-        <div className='text-center'>
-          <h2 className='text-3xl sm:text-5xl font-bold mb-4'>Select your city!</h2>
-          <p className='text-lg sm:text-2xl mb-6 md:mb-14'>
+    <section className="py-10 md:py-16 bg-base-300">
+      <div className="container">
+        <div className="text-center">
+          <h2 className="text-3xl sm:text-5xl font-bold mb-4">Select your city!</h2>
+          <p className="text-lg sm:text-2xl mb-6 md:mb-14">
             Don’t miss out! Buy now before tickets sell out!.
           </p>
         </div>
@@ -181,7 +181,7 @@ export default function EventPage() {
         >
           {eventsWithVenues.map((event, index) =>
             event.tricket_url ? (
-              <a href={event.tricket_url} key={index} target='_blank' rel='noopener noreferrer'>
+              <a href={event.tricket_url} key={index} target="_blank" rel="noopener noreferrer">
                 <EventCard
                   key={index}
                   id={event.eventId}

@@ -30,7 +30,7 @@ const useFetchJson = (url: string, options?: RequestInit) => {
 }
 
 const findData = (data: any[], id: string) => {
-  return data.find((item) => item.id === id)
+  return data.find(item => item.id === id)
 }
 
 const fetchGitHubImage = async (label: string): Promise<string> => {

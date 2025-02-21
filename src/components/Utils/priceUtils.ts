@@ -3,14 +3,14 @@ const seatrangesToValues = (ranges: string[]): number[] => {
   const values: number[] = []
 
   // Iterar sobre cada string en la lista de rangos
-  ranges.forEach((r) => {
+  ranges.forEach(r => {
     const parsedNumber = parseInt(r, 10)
 
     if (!isNaN(parsedNumber)) {
       values.push(parsedNumber)
     } else {
       try {
-        let param = r.split(',', 3).map((s) => parseInt(s, 10))
+        let param = r.split(',', 3).map(s => parseInt(s, 10))
 
         if (param.length === 2) {
           param.push(1)
@@ -52,7 +52,7 @@ const extractZonePrices = (result: any) => {
     console.log(zones)
     const priceTierKeys = Object.keys(priceTiers as Record<string, any>)
     console.log('prices', priceTierKeys)
-    const pricesForZone = priceTierKeys.map((priceTierKey) => {
+    const pricesForZone = priceTierKeys.map(priceTierKey => {
       const availableDates = Object.keys(prices[priceTierKey])
       console.log('available', availableDates)
       const firstAvailableDate = availableDates[0]
@@ -120,10 +120,10 @@ export { zoneseatToPrice }
 //dado un tipo de precio, se regresa el monto
 const pricetypeToAmount = (prices: any, priceType: string): number => {
   const priceHistory = prices[priceType]
-  const dateObjs = Object.keys(priceHistory).map((date) => new Date(date))
+  const dateObjs = Object.keys(priceHistory).map(date => new Date(date))
   dateObjs.sort((a, b) => a.getTime() - b.getTime())
 
-  const dateTs = dateObjs.filter((date) => date < new Date()).pop()
+  const dateTs = dateObjs.filter(date => date < new Date()).pop()
   if (!dateTs) {
     throw new Error('No valid date found')
   }

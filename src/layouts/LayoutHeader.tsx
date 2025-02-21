@@ -6,7 +6,7 @@ interface LayoutProps {
 }
 
 const LayoutHeader: React.FC<LayoutProps> = ({ children }) => (
-  <div data-theme='synthwave'>
+  <div data-theme="synthwave">
     <Header />
     {children}
   </div>

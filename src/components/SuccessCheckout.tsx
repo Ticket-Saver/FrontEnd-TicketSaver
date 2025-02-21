@@ -28,7 +28,7 @@ interface OrderResponse {
 }
 
 const SuccessCheckout = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const [orderData, setOrderData] = useState<OrderResponse | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -42,43 +42,49 @@ const SuccessCheckout = () => {
         const token2 = import.meta.env.VITE_TOKEN_HIEVENTS
         console.log('Cart Data:', cartData)
         const eventId = cartData.eventInfo?.venueId || '1' // Usamos '2' como fallback
-//console.log('wow',eventId); 
+        //console.log('wow',eventId);
         try {
-            const attendeeResponse = await fetch(`https://localhost:8443/api/events/${eventId}/attendees`,  {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              'Authorization': `Bearer ${token2}`
-            },
-            // @ts-ignore
-            rejectUnauthorized: false,
-            body: JSON.stringify({
-              ticket_id: "265",
-              email: cartData.customer?.email,
-              first_name: cartData.customer?.firstName,
-              last_name: cartData.customer?.lastName,
-              amount_paid: cartData.cart?.[0]?.price_final || 2,
-              send_confirmation_email: true,
-              taxes_and_fees: [],
-              locale: "es",
-              ticket_price_id: "265"
-            })
-          })
+          const attendeeResponse = await fetch(
+            `https://localhost:8443/api/events/${eventId}/attendees`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+                Authorization: `Bearer ${token2}`
+              },
+              // @ts-ignore
+              rejectUnauthorized: false,
+              body: JSON.stringify({
+                ticket_id: '265',
+                email: cartData.customer?.email,
+                first_name: cartData.customer?.firstName,
+                last_name: cartData.customer?.lastName,
+                amount_paid: cartData.cart?.[0]?.price_final || 2,
+                send_confirmation_email: true,
+                taxes_and_fees: [],
+                locale: 'es',
+                ticket_price_id: '265'
+              })
+            }
+          )
 
           console.log('Attendee Response:', attendeeResponse)
           const attendeeData = await attendeeResponse.json()
           console.log('Attendee Data:', attendeeData)
 
           // Obtener los detalles del attendee usando el ID generado
-          const attendeeDetailsResponse = await fetch(`https://localhost:8443/api/events/${eventId}/attendees/${attendeeData.data.id}`, {
-            headers: {
-              'Accept': 'application/json',
-              'Authorization': `Bearer ${token2}`
-            },
-            // @ts-ignore
-            rejectUnauthorized: false
-          })
+          const attendeeDetailsResponse = await fetch(
+            `https://localhost:8443/api/events/${eventId}/attendees/${attendeeData.data.id}`,
+            {
+              headers: {
+                Accept: 'application/json',
+                Authorization: `Bearer ${token2}`
+              },
+              // @ts-ignore
+              rejectUnauthorized: false
+            }
+          )
 
           const attendeeDetails = await attendeeDetailsResponse.json()
           console.log('Attendee Details:', attendeeDetails)
@@ -88,7 +94,6 @@ const SuccessCheckout = () => {
             ...orderData,
             attendeeDetails: attendeeDetails.data
           })
-
         } catch (error) {
           console.error('Error in API calls:', error)
           throw error
@@ -104,15 +109,17 @@ const SuccessCheckout = () => {
     createAttendeeAndFetchOrder()
   }, [])
 
-  const qrData = orderData?.attendeeDetails ? JSON.stringify({
-    ticketId: orderData.attendeeDetails.public_id,
-    eventId: orderData.attendeeDetails.event_id,
-    attendee: `${orderData.attendeeDetails.first_name} ${orderData.attendeeDetails.last_name}`,
-    email: orderData.attendeeDetails.email,
-    seat: orderData.attendeeDetails.ticket.seat_label,
-    status: orderData.attendeeDetails.status,
-    shortId: orderData.attendeeDetails.short_id
-  }) : ''
+  const qrData = orderData?.attendeeDetails
+    ? JSON.stringify({
+        ticketId: orderData.attendeeDetails.public_id,
+        eventId: orderData.attendeeDetails.event_id,
+        attendee: `${orderData.attendeeDetails.first_name} ${orderData.attendeeDetails.last_name}`,
+        email: orderData.attendeeDetails.email,
+        seat: orderData.attendeeDetails.ticket.seat_label,
+        status: orderData.attendeeDetails.status,
+        shortId: orderData.attendeeDetails.short_id
+      })
+    : ''
 
   if (loading) {
     return (
@@ -256,25 +263,25 @@ const SuccessCheckout = () => {
                     className="mx-auto"
                   />
                 </div>
-                
+
                 {/* Botones de acción */}
                 <div className="flex gap-4 mt-6">
                   <button
                     onClick={() => window.print()}
                     className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700"
                   >
-                    <svg 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      className="h-5 w-5 mr-2" 
-                      fill="none" 
-                      viewBox="0 0 24 24" 
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 mr-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
                       stroke="currentColor"
                     >
-                      <path 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        strokeWidth={2} 
-                        d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2" 
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"
                       />
                       <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4" />
                       <path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z" />
@@ -284,17 +291,17 @@ const SuccessCheckout = () => {
 
                   <button
                     onClick={() => {
-                      const ticketUrl = window.location.href;
-                      navigator.clipboard.writeText(ticketUrl);
-                      alert('Link copiado al portapapeles');
+                      const ticketUrl = window.location.href
+                      navigator.clipboard.writeText(ticketUrl)
+                      alert('Link copiado al portapapeles')
                     }}
                     className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700"
                   >
-                    <svg 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      className="h-5 w-5 mr-2" 
-                      fill="none" 
-                      viewBox="0 0 24 24" 
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 mr-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
                       stroke="currentColor"
                     >
                       <path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" />
@@ -307,18 +314,18 @@ const SuccessCheckout = () => {
                     onClick={() => navigate('/')}
                     className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700"
                   >
-                    <svg 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      className="h-5 w-5 mr-2" 
-                      fill="none" 
-                      viewBox="0 0 24 24" 
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 mr-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
                       stroke="currentColor"
                     >
-                      <path 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        strokeWidth={2} 
-                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" 
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
                       />
                     </svg>
                     Volver al inicio

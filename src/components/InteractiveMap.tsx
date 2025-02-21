@@ -35,14 +35,14 @@ const InteractiveMap = ({
 
   useEffect(() => {
     const map = { ...getDefaultMap() }
-    map.areas = map.areas.map((mapArea) => {
+    map.areas = map.areas.map(mapArea => {
       const newArea = { ...mapArea }
       newArea.coords = newArea.coords.map((coord, index) => {
         return index % 2 === 0 ? (coord / 1328) * width : (coord / 1328) * height
       })
 
       if (newArea.polygon) {
-        newArea.polygon = newArea.polygon.map((point) => {
+        newArea.polygon = newArea.polygon.map(point => {
           return point.map((coord, index) => {
             return index % 2 === 0 ? (coord / 1328) * width : (coord / 1328) * height
           })
@@ -51,7 +51,7 @@ const InteractiveMap = ({
 
       if (
         highlightedAreas.some(
-          (highlightedArea) =>
+          highlightedArea =>
             JSON.stringify(highlightedArea.coords) === JSON.stringify(newArea.coords)
         )
       ) {
@@ -70,9 +70,8 @@ const InteractiveMap = ({
   }
 
   return (
-    <div   className='flex-row overflow-visible justify-center content-center '>
-      <div className='justify-center content-center items-center overline mt-4 cursor-pointer'>
-       
+    <div className="flex-row overflow-visible justify-center content-center ">
+      <div className="justify-center content-center items-center overline mt-4 cursor-pointer">
         <ImageMapper
           src={src}
           map={updatedMap}

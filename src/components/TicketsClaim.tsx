@@ -19,12 +19,12 @@ export default function TicketsClaim({ title, city, thumbnailURL }: TickectClaim
   const { isConnected } = useAccount()
 
   return (
-    <div className='w-full h-72 bg-neutral rounded-xl flex flex-row'>
-      <div className='flex flex-col justify-between p-4 py-6 w-2/5'>
-        <div className='text-3xl font-semibold'>{title}</div>
-        <div className='w-full h-[1px] bg-gradient-to-r from-[#E779C1] to-[#221551]'></div>
-        <div className='text-xl pb-4'>{city}</div>
-        <div className='text-sm pb-10'>
+    <div className="w-full h-72 bg-neutral rounded-xl flex flex-row">
+      <div className="flex flex-col justify-between p-4 py-6 w-2/5">
+        <div className="text-3xl font-semibold">{title}</div>
+        <div className="w-full h-[1px] bg-gradient-to-r from-[#E779C1] to-[#221551]"></div>
+        <div className="text-xl pb-4">{city}</div>
+        <div className="text-sm pb-10">
           You have a collectible ticket to claim! Connect your wallet now to secure it
         </div>
         {!isConnected ? (
@@ -37,11 +37,11 @@ export default function TicketsClaim({ title, city, thumbnailURL }: TickectClaim
           </a>
         )}
       </div>
-      <div className='w-3/5 flex justify-center items-center p-4'>
+      <div className="w-3/5 flex justify-center items-center p-4">
         <img
           src={thumbnailURL}
-          alt='Event Image'
-          className='w-full h-full object-cover rounded-xl'
+          alt="Event Image"
+          className="w-full h-full object-cover rounded-xl"
         />
       </div>
     </div>

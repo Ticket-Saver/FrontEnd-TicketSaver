@@ -10,7 +10,7 @@ console.log('Stripe Public Key:', STRIPE_PUBLIC_KEY ? 'Existe' : 'No existe', {
 })
 
 // Solo cargar Stripe si existe la clave
-const stripePromise = STRIPE_PUBLIC_KEY 
+const stripePromise = STRIPE_PUBLIC_KEY
   ? loadStripe(STRIPE_PUBLIC_KEY)
   : Promise.reject('No Stripe Public Key found')
 
@@ -39,7 +39,7 @@ const CheckoutStripe = () => {
       // Simular respuesta de Stripe en modo demo
       const demoClientSecret = 'demo_' + Math.random().toString(36).substr(2, 9)
       setClientSecret(demoClientSecret)
-      
+
       return
 
       // Código original comentado
@@ -84,25 +84,28 @@ const CheckoutStripe = () => {
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault()
       setIsProcessing(true)
-      
+
       try {
         // Guardar los datos del cliente en localStorage
         const cartCheckout = JSON.parse(localStorage.getItem('cart_checkout') || '{}')
-        localStorage.setItem('cart_checkout', JSON.stringify({
-          ...cartCheckout,
-          customer: {
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            email: formData.email
-          }
-        }))
+        localStorage.setItem(
+          'cart_checkout',
+          JSON.stringify({
+            ...cartCheckout,
+            customer: {
+              firstName: formData.firstName,
+              lastName: formData.lastName,
+              email: formData.email
+            }
+          })
+        )
 
         // Simular procesamiento
         await new Promise(resolve => setTimeout(resolve, 2000))
-        
+
         setIsProcessing(false)
         setIsComplete(true)
-        
+
         // Redirigir después de un pago exitoso
         setTimeout(() => {
           window.location.href = '/success'
@@ -135,7 +138,7 @@ const CheckoutStripe = () => {
         <div className="bg-yellow-100 text-yellow-700 p-4 rounded-lg mb-6">
           Modo Demo - Simulación de Checkout
         </div>
-        
+
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Información personal */}
           <div className="space-y-4">
@@ -150,7 +153,7 @@ const CheckoutStripe = () => {
                 required
               />
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium mb-2">Apellido</label>
               <input
@@ -187,7 +190,7 @@ const CheckoutStripe = () => {
                 disabled
               />
             </div>
-            
+
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div>
                 <label className="block text-sm font-medium mb-2">Fecha de Expiración</label>
@@ -225,13 +228,15 @@ const CheckoutStripe = () => {
   }
 
   return (
-    <div id='checkout'>
+    <div id="checkout">
       {clientSecret && clientSecret.startsWith('demo_') ? (
         <DemoCheckoutForm />
-      ) : clientSecret && (
-        <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret }}>
-          <EmbeddedCheckout />
-        </EmbeddedCheckoutProvider>
+      ) : (
+        clientSecret && (
+          <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret }}>
+            <EmbeddedCheckout />
+          </EmbeddedCheckoutProvider>
+        )
       )}
     </div>
   )
