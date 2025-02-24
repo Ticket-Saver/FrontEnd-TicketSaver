@@ -165,33 +165,31 @@ export default function EventPage() {
 
   useEffect(() => {
     const fetchDescriptions = async () => {
-    
-        // Si no hay descripción de GitHub, intentar con la API local
-        const localResponse = await fetch(`${hieventsUrl}${venue}`, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token2}`,
-            'Content-Type': 'application/json'
-          }
-        })
-
-        if (!localResponse.ok) {
-          throw new Error(`Error en la respuesta local: ${localResponse.status}`)
+      // Si no hay descripción de GitHub, intentar con la API local
+      const localResponse = await fetch(`${hieventsUrl}${venue}`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token2}`,
+          'Content-Type': 'application/json'
         }
+      })
 
-        const localData = await localResponse.json()
-        console.log('Respuesta de API local:', {
-          status: localResponse.status,
-          data: localData,
-          description: localData.description
-        });
+      if (!localResponse.ok) {
+        throw new Error(`Error en la respuesta local: ${localResponse.status}`)
+      }
 
-        setDescription(
-          localData.data.description?.replace(/<\/?[^>]+(>|$)/g, '') ||
-            'No hay descripción disponible'
-        )
-        return
-      
+      const localData = await localResponse.json()
+      console.log('Respuesta de API local:', {
+        status: localResponse.status,
+        data: localData,
+        description: localData.description
+      })
+
+      setDescription(
+        localData.data.description?.replace(/<\/?[^>]+(>|$)/g, '') ||
+          'No hay descripción disponible'
+      )
+      return
     }
 
     if (label) {
@@ -277,11 +275,7 @@ export default function EventPage() {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50 z-10" />
-          <img
-            src={image}
-            alt="Event Cover"
-            className="w-full h-full object-cover object-center"
-          />
+          <img src={image} alt="Event Cover" className="w-full h-full object-cover object-center" />
         </div>
 
         {/* Content Container */}
@@ -298,14 +292,15 @@ export default function EventPage() {
                     {venues?.venue_name}, {venues?.location.city}
                   </span>
                 </div>
-                
-                <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight">
-                  {name}
-                </h1>
-                
+
+                <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight">{name}</h1>
+
                 <div className="flex items-center gap-2 text-white/90">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" />
+                    <path
+                      fillRule="evenodd"
+                      d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                    />
                   </svg>
                   <span className="text-lg">
                     {new Date(date!).toLocaleDateString('en-GB', {
@@ -313,7 +308,8 @@ export default function EventPage() {
                       day: 'numeric',
                       month: 'long',
                       year: 'numeric'
-                    })} - {hour} hrs
+                    })}{' '}
+                    - {hour} hrs
                   </span>
                 </div>
               </div>
@@ -324,7 +320,10 @@ export default function EventPage() {
                 <div className="space-y-4">
                   {zonePriceList.length > 0 ? (
                     zonePriceList.map(zoneItem => (
-                      <div key={zoneItem.zone} className="flex justify-between items-center py-2 border-b border-gray-100">
+                      <div
+                        key={zoneItem.zone}
+                        className="flex justify-between items-center py-2 border-b border-gray-100"
+                      >
                         <div>
                           <p className="font-medium text-gray-900">{zoneItem.zone}</p>
                           <p className="text-sm text-gray-500">Starting from</p>
@@ -345,7 +344,7 @@ export default function EventPage() {
                       </button>
                     </div>
                   )}
-                  
+
                   <Link
                     to={`/sale/${name}/${venues?.venue_label}/${venues?.location.city}/${date}/${label}/${deleteParam}`}
                     state={{
@@ -357,15 +356,15 @@ export default function EventPage() {
                       saleStartsAt: saleStartsAt
                     }}
                     className={`w-full mt-4 px-6 py-3 rounded-lg text-center font-semibold transition-all
-                      ${isSaleActive 
-                        ? 'bg-blue-600 hover:bg-blue-700 text-white' 
-                        : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                      ${
+                        isSaleActive
+                          ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                          : 'bg-gray-200 text-gray-500 cursor-not-allowed'
                       }`}
                   >
-                    {isSaleActive 
-                      ? 'Get Tickets' 
-                      : `Sales start ${new Date(saleStartsAt!).toLocaleDateString()}`
-                    }
+                    {isSaleActive
+                      ? 'Get Tickets'
+                      : `Sales start ${new Date(saleStartsAt!).toLocaleDateString()}`}
                   </Link>
                 </div>
               </div>
@@ -373,7 +372,7 @@ export default function EventPage() {
           </div>
         </div>
       </div>
-      
+
       {/* Rest of the content */}
       <div className="w-full bg-white">
         <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
@@ -390,7 +389,12 @@ export default function EventPage() {
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
                   </svg>
                   <h2 className="text-2xl font-bold text-gray-900">Date & Time</h2>
                 </div>
@@ -415,7 +419,12 @@ export default function EventPage() {
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
                   </svg>
                   <h2 className="text-2xl font-bold text-gray-900">About the Event</h2>
                 </div>
@@ -434,8 +443,18 @@ export default function EventPage() {
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
                   </svg>
                   <h2 className="text-2xl font-bold text-gray-900">Location</h2>
                 </div>
@@ -448,7 +467,12 @@ export default function EventPage() {
                       viewBox="0 0 24 24"
                       stroke="currentColor"
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      />
                     </svg>
                     <p className="text-xl text-gray-700">This is an online event</p>
                   </div>
@@ -511,8 +535,11 @@ export default function EventPage() {
           <div className="mt-16">
             <h2 className="text-2xl font-bold text-gray-900 mb-8">Event Gallery</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {[1, 2, 3, 4].map((index) => (
-                <div key={index} className="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+              {[1, 2, 3, 4].map(index => (
+                <div
+                  key={index}
+                  className="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
+                >
                   <img
                     src={image}
                     alt={`Event image ${index}`}
