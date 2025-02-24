@@ -104,7 +104,7 @@ export default function FeaturedEvents() {
         }))
 
         setEvents(formattedEvents)
-      //  console.log(formattedEvents)
+        //  console.log(formattedEvents)
       } catch (error) {
         console.error('Error fetching events:', error)
       }

@@ -52,8 +52,8 @@ const extractZonePrices = (tickets: any[]) => {
       available: !price.is_sold_out && price.is_available !== false,
       quantityAvailable: price.initial_quantity_available - price.quantity_sold
     }))
-  }));
-};
+  }))
+}
 
 export { extractZonePrices }
 

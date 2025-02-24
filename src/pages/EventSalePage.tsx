@@ -32,26 +32,25 @@ export default function EventPage() {
   useEffect(() => {
     const fetchHour = async () => {
       try {
-          const localResponse = await fetch(`${hieventsUrl}${venue}`, {
-            method: 'GET',
-            headers: {
-              Authorization: `Bearer ${token2}`,
-              'Content-Type': 'application/json'
-            }
-          })
-
-          if (!localResponse.ok) {
-            throw new Error(`Error en la respuesta local: ${localResponse.status}`)
+        const localResponse = await fetch(`${hieventsUrl}${venue}`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token2}`,
+            'Content-Type': 'application/json'
           }
-          const localData = await localResponse.json()
-          const local_date = new Date(localData.data.start_date).toISOString().split('T')[0] // Convertir y formatear la fecha
-          const dateTime = new Date(localData.data.start_date)
-          const hour = dateTime.getHours().toString().padStart(2, '0') // Obtiene la hora en formato 24h
-          setHour(`${hour}:00`)
-          setSaleStartsAt(local_date)
-          // console.log('hora',localData );
-          return
-        
+        })
+
+        if (!localResponse.ok) {
+          throw new Error(`Error en la respuesta local: ${localResponse.status}`)
+        }
+        const localData = await localResponse.json()
+        const local_date = new Date(localData.data.start_date).toISOString().split('T')[0] // Convertir y formatear la fecha
+        const dateTime = new Date(localData.data.start_date)
+        const hour = dateTime.getHours().toString().padStart(2, '0') // Obtiene la hora en formato 24h
+        setHour(`${hour}:00`)
+        setSaleStartsAt(local_date)
+        // console.log('hora',localData );
+        return
       } catch (error) {
         console.error('Failed to fetch event hour:', error)
       }
@@ -86,53 +85,48 @@ export default function EventPage() {
         setVenue(JSON.parse(storedVenues))
       } else {
         try {
-         
-            const localResponse = await fetch(
-              `${hieventsUrl}${venue}/settings`,
-              {
-                method: 'GET',
-                headers: {
-                  Authorization: `Bearer ${token2}`,
-                  'Content-Type': 'application/json'
-                }
-              }
-            )
-            const localData = await localResponse.json()
-          
-            const mapResponse = await fetch(`${hieventsUrl}${venue}`, {
-              method: 'GET',
-              headers: {
-                Authorization: `Bearer ${token2}`,
-                'Content-Type': 'application/json'
-              }
-            })
-
-            if (!mapResponse.ok) {
-              throw new Error(`Error en la respuesta local`)
+          const localResponse = await fetch(`${hieventsUrl}${venue}/settings`, {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token2}`,
+              'Content-Type': 'application/json'
             }
+          })
+          const localData = await localResponse.json()
 
-            const mapData = await mapResponse.json()
-            // console.log('mapData', mapData.data.map);
-            const hasSeatmap = mapData.data.map === 'map1' || mapData.data.map === 'map2'
-
-            //  console.log('localData', localData.data);
-            setVenue(localData.data.location_details.venue_name)
-            const matchingVenue = {
-              capacity: localData.data.capacity || 1000,
-              location: {
-                address: localData.data.settings?.location_details?.address || '',
-                city: localData.data.location_details?.city || '',
-                country: localData.data.location_details?.country || 'United States',
-                maps_url: localData.data.location_details?.maps_url || '',
-                zip_code: localData.data.location_details?.zip_code || ''
-              },
-              seatmap: hasSeatmap,
-              venue_label: localData.data.venue_label || venue,
-              venue_name: localData.data.location_details?.venue_name || localData.data.title
+          const mapResponse = await fetch(`${hieventsUrl}${venue}`, {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token2}`,
+              'Content-Type': 'application/json'
             }
+          })
+
+          if (!mapResponse.ok) {
+            throw new Error(`Error en la respuesta local`)
+          }
+
+          const mapData = await mapResponse.json()
+          // console.log('mapData', mapData.data.map);
+          const hasSeatmap = mapData.data.map === 'map1' || mapData.data.map === 'map2'
+
+          //  console.log('localData', localData.data);
+          setVenue(localData.data.location_details.venue_name)
+          const matchingVenue = {
+            capacity: localData.data.capacity || 1000,
+            location: {
+              address: localData.data.settings?.location_details?.address || '',
+              city: localData.data.location_details?.city || '',
+              country: localData.data.location_details?.country || 'United States',
+              maps_url: localData.data.location_details?.maps_url || '',
+              zip_code: localData.data.location_details?.zip_code || ''
+            },
+            seatmap: hasSeatmap,
+            venue_label: localData.data.venue_label || venue,
+            venue_name: localData.data.location_details?.venue_name || localData.data.title
+          }
           //  console.log('matchingVenue', matchingVenue)
-            setVenue(matchingVenue)
-         
+          setVenue(matchingVenue)
         } catch (error) {
           console.error('Error fetching data: ', error)
         }
@@ -143,19 +137,17 @@ export default function EventPage() {
 
   const customUrl = `${import.meta.env.VITE_HIEVENTS_API_URL as string}events/${venue}/`
   const [zonePriceList, setZonePriceList] = useState<any[]>([])
- 
+
   useEffect(() => {
     const fetchZonePrices = async () => {
       try {
-        const response = await fetch(customUrl, 
-          {
-            method: 'GET',
-            headers: {
-              Authorization: `Bearer ${token2}`,
-              'Content-Type': 'application/json'
-            }
+        const response = await fetch(customUrl, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token2}`,
+            'Content-Type': 'application/json'
           }
-        )
+        })
         if (!response.ok) {
           throw new Error('response error')
         }
@@ -175,8 +167,8 @@ export default function EventPage() {
     const fetchDescriptions = async () => {
       try {
         // Intentar primero con GitHub
-       // const description = await fetchDescription(label!, options)
-      //  setDescription(description)
+        // const description = await fetchDescription(label!, options)
+        //  setDescription(description)
       } catch (error) {
         // Si no hay descripción de GitHub, intentar con la API local
 
@@ -306,11 +298,10 @@ export default function EventPage() {
           {/* Event Description */}
           <div className="text-primary-content relative">
             <h2 className="text-4xl mb-4 bg-black bg-opacity-50 text-neutral-content rounded-lg px-10 py-2 inline-block max-w-full text-left mx-auto">
-          
-             {venues?.venue_name}, {venues?.location.city}
+              {venues?.venue_name}, {venues?.location.city}
             </h2>
             <h2 className="text-4xl mb-4 bg-black bg-opacity-50 text-neutral-content rounded-lg px-10 py-2 inline-block max-w-full text-left mx-auto">
-             {hour} hrs
+              {hour} hrs
             </h2>
             <h1 className="text-6xl font-bold mb-4 bg-black bg-opacity-50 text-neutral-content rounded-lg px-10 py-2 inline-block max-w-full text-left mx-auto ">
               {name}
@@ -330,7 +321,7 @@ export default function EventPage() {
                 </thead>
                 <tbody>
                   {/* Static ticket data */}
-                  {zonePriceList.map(zoneItem => ( 
+                  {zonePriceList.map(zoneItem => (
                     <tr key={zoneItem.zone}>
                       <th className="text-left font-normal">{zoneItem.zone}</th>
                       <th className="text-center font-normal">Starting prices from</th>
