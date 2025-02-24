@@ -376,7 +376,7 @@ export default function TicketSelection() {
 
   const handleGetAreaSeats = async (areaTitle: any, label: any) => {
     try {
-      const response = await fetch('/api/fetchTakenSeats', {
+      const response = await fetch('fetchTakenSeats', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

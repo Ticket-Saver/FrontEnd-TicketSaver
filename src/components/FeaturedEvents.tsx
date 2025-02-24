@@ -44,7 +44,7 @@ export default function FeaturedEvents() {
   const [descriptions, setDescriptions] = useState<Record<string, string>>({})
 
   const githubApiUrl = `${import.meta.env.VITE_GITHUB_API_URL as string}/events.json`
-  const hieventsUrl = `${import.meta.env.VITE_HIEVENTS_API_URL as string}/api/events?page=1&per_page=20&query=&sort_by=&sort_direction=&eventsStatus=upcoming`
+  const hieventsUrl = `${import.meta.env.VITE_HIEVENTS_API_URL as string}events?page=1&per_page=20&query=&sort_by=&sort_direction=&eventsStatus=upcoming`
   const token = import.meta.env.VITE_GITHUB_TOKEN
   const token2 = import.meta.env.VITE_TOKEN_HIEVENTS
 
