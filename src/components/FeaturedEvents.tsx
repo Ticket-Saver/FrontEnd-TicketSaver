@@ -148,14 +148,7 @@ export default function FeaturedEvents() {
           className={`grid ${events.length === 1 ? 'grid-cols-1 place-items-center' : 'sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2'} gap-6 lg:gap-8 xl:gap-10 place-items-center items-center`}
         >
           {events.map((event, index) => (
-            <div key={index}>
-              <div className="text-sm text-gray-500 mb-2 p-2 bg-gray-100 rounded">
-                <p><span className="font-bold">Event Name:</span> {encodeURIComponent(event.event_name)}</p>
-                <p><span className="font-bold">ID:</span> {event.id}</p>
-                <p><span className="font-bold">Date:</span> {event.event_date}</p>
-                <p><span className="font-bold">Label:</span> {event.event_label}</p>
-                <p><span className="font-bold">Deleted At:</span> {event.event_deleted_at}</p>
-              </div>
+      
               <Link
                 style={{ width: '100%' }}
                 to={`/event/${encodeURIComponent(event.event_name)}/${event.id}/${event.event_date}/${event.event_label}/${event.event_deleted_at}`}

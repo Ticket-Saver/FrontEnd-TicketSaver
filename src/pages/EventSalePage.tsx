@@ -141,19 +141,28 @@ export default function EventPage() {
     fetchVenues()
   }, [venue, githubApiUrl, token])
 
-  const customUrl = `${import.meta.env.VITE_GITHUB_API_URL as string}/events/${label}/zone_price.json`
+  const customUrl = `${import.meta.env.VITE_HIEVENTS_API_URL as string}events/${venue}/`
   const [zonePriceList, setZonePriceList] = useState<any[]>([])
-
+ 
   useEffect(() => {
     const fetchZonePrices = async () => {
       try {
-        const response = await fetch(customUrl, options)
+        const response = await fetch(customUrl, 
+          {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token2}`,
+              'Content-Type': 'application/json'
+            }
+          }
+        )
         if (!response.ok) {
           throw new Error('response error')
         }
         const zonePrices = await response.json()
-        const zonePriceListData = extractZonePrices(zonePrices)
-        console.log('zonePriceListData', zonePriceListData)
+        const counterPrices = zonePrices.data.tickets
+        const zonePriceListData = extractZonePrices(counterPrices)
+        //console.log('este es counter :', zonePriceListData);
         setZonePriceList(zonePriceListData)
       } catch (error) {
         console.error('Error fetching zone prices', error)
@@ -166,8 +175,8 @@ export default function EventPage() {
     const fetchDescriptions = async () => {
       try {
         // Intentar primero con GitHub
-        const description = await fetchDescription(label!, options)
-        setDescription(description)
+       // const description = await fetchDescription(label!, options)
+      //  setDescription(description)
       } catch (error) {
         // Si no hay descripción de GitHub, intentar con la API local
 
@@ -321,17 +330,14 @@ export default function EventPage() {
                 </thead>
                 <tbody>
                   {/* Static ticket data */}
-                  {zonePriceList.map(zoneItem => (
+                  {zonePriceList.map(zoneItem => ( 
                     <tr key={zoneItem.zone}>
                       <th className="text-left font-normal">{zoneItem.zone}</th>
                       <th className="text-center font-normal">Starting prices from</th>
                       <th>
                         <a className="font-bold" style={{ fontSize: '14px' }}>
                           {' '}
-                          $
-                          {Math.min(...zoneItem.prices.map((price: any) => price.priceFinal)) /
-                            100}{' '}
-                          USD
+                          ${Math.min(...zoneItem.prices.map((price: any) => price.priceFinal))} USD
                         </a>
                       </th>
                     </tr>

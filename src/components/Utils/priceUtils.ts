@@ -43,31 +43,17 @@ const zone_prices_file = (data: any): { prices: any; seatmap: any } => {
 }
 export { zone_prices_file }
 
-//dada los precios y sus zonas, se regresa el nombre de la zona y los precios
-const extractZonePrices = (result: any) => {
-  const { prices, zones } = result
-  const zonePriceList = []
-
-  for (const [zoneName, priceTiers] of Object.entries(zones)) {
-    console.log(zones)
-    const priceTierKeys = Object.keys(priceTiers as Record<string, any>)
-    console.log('prices', priceTierKeys)
-    const pricesForZone = priceTierKeys.map(priceTierKey => {
-      const availableDates = Object.keys(prices[priceTierKey])
-      console.log('available', availableDates)
-      const firstAvailableDate = availableDates[0]
-      const priceInfo = prices[priceTierKey][firstAvailableDate]
-      return {
-        priceBase: priceInfo.price_base,
-        priceFinal: priceInfo.price_final
-      }
-    })
-
-    zonePriceList.push({ zone: zoneName, prices: pricesForZone })
-  }
-
-  return zonePriceList
-}
+// dada los precios y sus correspondientes zonas, se regresa el nombre de la zona y los precios
+const extractZonePrices = (tickets: any[]) => {
+  return tickets.map(ticket => ({
+    zone: ticket.title,
+    prices: ticket.prices.map((price: any) => ({
+      priceFinal: price.price_including_taxes_and_fees,
+      available: !price.is_sold_out && price.is_available !== false,
+      quantityAvailable: price.initial_quantity_available - price.quantity_sold
+    }))
+  }));
+};
 
 export { extractZonePrices }
 
