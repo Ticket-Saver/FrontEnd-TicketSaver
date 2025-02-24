@@ -301,7 +301,11 @@ export default function EventPage() {
           {isLoading ? (
             <Skeleton className="w-full h-full" />
           ) : (
-            <img src={image} alt="Event Cover" className="w-full h-full object-cover object-center" />
+            <img
+              src={image}
+              alt="Event Cover"
+              className="w-full h-full object-cover object-center"
+            />
           )}
         </div>
 
@@ -328,7 +332,9 @@ export default function EventPage() {
                       </span>
                     </div>
 
-                    <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight">{name}</h1>
+                    <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight">
+                      {name}
+                    </h1>
 
                     <div className="flex items-center gap-2 text-white/90">
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -390,28 +396,28 @@ export default function EventPage() {
                           </button>
                         </div>
                       )}
-  <div className="space-y-4">
-                      <Link
-                        to={`/sale/${name}/${venues?.venue_label}/${venues?.location.city}/${date}/${label}/${deleteParam}`}
-                        state={{
-                          eventName: name,
-                          eventHour: hour,
-                          eventDescription: description,
-                          venueName: venues?.venue_name,
-                          venueCity: venues?.location.city,
-                          saleStartsAt: saleStartsAt
-                        }}
-                        className={`w-full mt-4 px-6 py-3 rounded-lg text-center font-semibold transition-all
+                      <div className="space-y-4">
+                        <Link
+                          to={`/sale/${name}/${venues?.venue_label}/${venues?.location.city}/${date}/${label}/${deleteParam}`}
+                          state={{
+                            eventName: name,
+                            eventHour: hour,
+                            eventDescription: description,
+                            venueName: venues?.venue_name,
+                            venueCity: venues?.location.city,
+                            saleStartsAt: saleStartsAt
+                          }}
+                          className={`w-full mt-4 px-6 py-3 rounded-lg text-center font-semibold transition-all
                       ${
                         isSaleActive
                           ? 'bg-blue-600 hover:bg-blue-700 text-white'
                           : 'bg-gray-200 text-gray-500 cursor-not-allowed'
                       }`}
-                      >
-                        {isSaleActive
-                          ? 'Get Tickets'
-                          : `Sales start ${new Date(saleStartsAt!).toLocaleDateString()}`}
-                      </Link>
+                        >
+                          {isSaleActive
+                            ? 'Get Tickets'
+                            : `Sales start ${new Date(saleStartsAt!).toLocaleDateString()}`}
+                        </Link>
                       </div>
                     </div>
                   </>
@@ -605,9 +611,11 @@ export default function EventPage() {
             <h2 className="text-2xl font-bold text-gray-900 mb-8">Event Gallery</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {isLoading
-                ? Array(4).fill(0).map((_, index) => (
-                    <Skeleton key={index} className="aspect-w-16 aspect-h-9 rounded-xl" />
-                  ))
+                ? Array(4)
+                    .fill(0)
+                    .map((_, index) => (
+                      <Skeleton key={index} className="aspect-w-16 aspect-h-9 rounded-xl" />
+                    ))
                 : [1, 2, 3, 4].map(index => (
                     <div
                       key={index}
