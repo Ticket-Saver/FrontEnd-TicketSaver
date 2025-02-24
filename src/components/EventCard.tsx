@@ -54,7 +54,7 @@ export function EventCard({
           </h2>
           <h2 className="badge badge-outline">{date}</h2>
         </div>
-        <p className="text-sm sm:text-base">{description}</p>
+        <p className="text-sm sm:text-base line-clamp-6">{description}</p>
       </div>
     </div>
   )

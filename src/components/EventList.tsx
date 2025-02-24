@@ -82,7 +82,7 @@ const EventList: React.FC<EventListProps> = ({ filterFunction, noEventsMessage }
     phone: string | undefined
   }) {
     try {
-      const response = await fetch('invoice', {
+      const response = await fetch('/invoice', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
