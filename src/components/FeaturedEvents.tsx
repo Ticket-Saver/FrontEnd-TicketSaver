@@ -77,7 +77,7 @@ export default function FeaturedEvents() {
         const formattedEvents: EventWithVenue[] = data.data.map((event: any) => ({
           eventId: event.id,
           event_name: event.title,
-          event_label: event.map || '',
+          event_label: event.map || 'general',
           event_date: new Date(event.end_date).toISOString().split('T')[0],
           event_hour: event.event_hour || '',
           venue_label: 'default_venue',
@@ -104,6 +104,7 @@ export default function FeaturedEvents() {
         }))
 
         setEvents(formattedEvents)
+      //  console.log(formattedEvents)
       } catch (error) {
         console.error('Error fetching events:', error)
       }
@@ -147,25 +148,33 @@ export default function FeaturedEvents() {
           className={`grid ${events.length === 1 ? 'grid-cols-1 place-items-center' : 'sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2'} gap-6 lg:gap-8 xl:gap-10 place-items-center items-center`}
         >
           {events.map((event, index) => (
-            <Link
-              style={{ width: '100%' }}
-              to={`/event/${encodeURIComponent(event.event_name)}/${event.id}/${event.event_date}/${event.event_label}/${event.event_deleted_at}`}
-              key={index}
-            >
-              <EventCard
-                key={index}
-                id={event.eventId}
-                eventId={event.eventId}
-                title={event.event_name}
-                description={descriptions[event.event_label] || event.description}
-                thumbnailURL={event.images[0]?.url || '/default.jpg'}
-                venue={event.venue?.venue_name || event.venue_label}
-                date={new Date(event.event_date)
-                  .toLocaleDateString('en-GB', optionsDate)
-                  .replace(',', '')}
-                city={event.venue?.location.city || event.city}
-              />
-            </Link>
+            <div key={index}>
+              <div className="text-sm text-gray-500 mb-2 p-2 bg-gray-100 rounded">
+                <p><span className="font-bold">Event Name:</span> {encodeURIComponent(event.event_name)}</p>
+                <p><span className="font-bold">ID:</span> {event.id}</p>
+                <p><span className="font-bold">Date:</span> {event.event_date}</p>
+                <p><span className="font-bold">Label:</span> {event.event_label}</p>
+                <p><span className="font-bold">Deleted At:</span> {event.event_deleted_at}</p>
+              </div>
+              <Link
+                style={{ width: '100%' }}
+                to={`/event/${encodeURIComponent(event.event_name)}/${event.id}/${event.event_date}/${event.event_label}/${event.event_deleted_at}`}
+              >
+                <EventCard
+                  key={index}
+                  id={event.eventId}
+                  eventId={event.eventId}
+                  title={event.event_name}
+                  description={descriptions[event.event_label] || event.description}
+                  thumbnailURL={event.images[0]?.url || '/default.jpg'}
+                  venue={event.venue?.venue_name || event.venue_label}
+                  date={new Date(event.event_date)
+                    .toLocaleDateString('en-GB', optionsDate)
+                    .replace(',', '')}
+                  city={event.venue?.location.city || event.city}
+                />
+              </Link>
+            </div>
           ))}
         </div>
       </div>

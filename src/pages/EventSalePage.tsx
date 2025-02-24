@@ -18,7 +18,7 @@ export default function EventPage() {
 
   const githubApiUrl = `${import.meta.env.VITE_GITHUB_API_URL as string}/venues.json`
   const githubApiUrl2 = `${import.meta.env.VITE_GITHUB_API_URL as string}/events.json`
-  const hieventsUrl = `${import.meta.env.VITE_HIEVENTS_API_URL as string}/events/`
+  const hieventsUrl = `${import.meta.env.VITE_HIEVENTS_API_URL as string}events/`
 
   const token = import.meta.env.VITE_GITHUB_TOKEN
   const token2 = import.meta.env.VITE_TOKEN_HIEVENTS
@@ -32,16 +32,6 @@ export default function EventPage() {
   useEffect(() => {
     const fetchHour = async () => {
       try {
-        const response = await fetch(githubApiUrl2, options)
-        if (!response.ok) {
-          throw new Error('response error')
-        }
-        const events = await response.json()
-        const event = events[label!]
-        if (event) {
-          setHour(event.event_hour)
-          setSaleStartsAt(event.sale_starts_at)
-        } else {
           const localResponse = await fetch(`${hieventsUrl}${venue}`, {
             method: 'GET',
             headers: {
@@ -61,7 +51,7 @@ export default function EventPage() {
           setSaleStartsAt(local_date)
           // console.log('hora',localData );
           return
-        }
+        
       } catch (error) {
         console.error('Failed to fetch event hour:', error)
       }
@@ -96,25 +86,9 @@ export default function EventPage() {
         setVenue(JSON.parse(storedVenues))
       } else {
         try {
-          const response = await fetch(githubApiUrl, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              Accept: 'application/vnd.github.v3.raw'
-            }
-          })
-
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`)
-          }
-
-          const data = await response.json()
-          const matchingVenue = data[venue!]
-          // console.log('matchingVenue', matchingVenue);
-          //si es undefined, buscar en la api local
-          if (!matchingVenue) {
+         
             const localResponse = await fetch(
               `${hieventsUrl}${venue}/settings`,
-
               {
                 method: 'GET',
                 headers: {
@@ -124,8 +98,7 @@ export default function EventPage() {
               }
             )
             const localData = await localResponse.json()
-            //console.log('localData->', localData);
-            // Segundo consumo para verificar seatmap
+          
             const mapResponse = await fetch(`${hieventsUrl}${venue}`, {
               method: 'GET',
               headers: {
@@ -157,11 +130,9 @@ export default function EventPage() {
               venue_label: localData.data.venue_label || venue,
               venue_name: localData.data.location_details?.venue_name || localData.data.title
             }
-            console.log('matchingVenue', matchingVenue)
+          //  console.log('matchingVenue', matchingVenue)
             setVenue(matchingVenue)
-          } else {
-            setVenue(matchingVenue)
-          }
+         
         } catch (error) {
           console.error('Error fetching data: ', error)
         }
@@ -304,7 +275,6 @@ export default function EventPage() {
   const currentDate = new Date()
   const saleStartsAtDate = saleStartsAt ? new Date(saleStartsAt) : null
   const isSaleActive = saleStartsAtDate ? currentDate >= saleStartsAtDate : false
-
   return (
     <div className="bg-white">
       <div className="bg-gray-100 relative">
@@ -327,10 +297,11 @@ export default function EventPage() {
           {/* Event Description */}
           <div className="text-primary-content relative">
             <h2 className="text-4xl mb-4 bg-black bg-opacity-50 text-neutral-content rounded-lg px-10 py-2 inline-block max-w-full text-left mx-auto">
-              {venues?.venue_name}, {venues?.location.city}
+          
+             {venues?.venue_name}, {venues?.location.city}
             </h2>
             <h2 className="text-4xl mb-4 bg-black bg-opacity-50 text-neutral-content rounded-lg px-10 py-2 inline-block max-w-full text-left mx-auto">
-              {hour} hrs
+             {hour} hrs
             </h2>
             <h1 className="text-6xl font-bold mb-4 bg-black bg-opacity-50 text-neutral-content rounded-lg px-10 py-2 inline-block max-w-full text-left mx-auto ">
               {name}
