@@ -390,7 +390,7 @@ export default function EventPage() {
                           </button>
                         </div>
                       )}
-
+  <div className="space-y-4">
                       <Link
                         to={`/sale/${name}/${venues?.venue_label}/${venues?.location.city}/${date}/${label}/${deleteParam}`}
                         state={{
@@ -412,6 +412,7 @@ export default function EventPage() {
                           ? 'Get Tickets'
                           : `Sales start ${new Date(saleStartsAt!).toLocaleDateString()}`}
                       </Link>
+                      </div>
                     </div>
                   </>
                 )}
