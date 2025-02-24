@@ -1,0 +1,13 @@
+name: frontend-ticketsaver
+services:
+  - name: web
+    git:
+      branch: main
+      repo_clone_url: https://github.com/Ticket-Saver/FrontEnd-TicketSaver
+    build_command: npm run build
+    run_command: npm start
+    envs:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "8080" 
