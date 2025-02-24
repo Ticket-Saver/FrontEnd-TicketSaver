@@ -272,92 +272,109 @@ export default function EventPage() {
   const isSaleActive = saleStartsAtDate ? currentDate >= saleStartsAtDate : false
   return (
     <div className="bg-white">
-      <div className="bg-gray-100 relative">
-        {/* Event Header */}
+      {/* Hero Section */}
+      <div className="relative h-[80vh] bg-black">
+        {/* Background Image with Overlay */}
         <div className="absolute inset-0">
-          {/* Cover Image */}
-          <div className="relative h-96 bg-gray-500">
-            <div className="absolute inset-0 overflow-hidden">
-              <img
-                src={image}
-                alt="Event Profile"
-                className="w-full h-full object-cover overflow-hidden object-top"
-              />
-            </div>
-          </div>
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50 z-10" />
+          <img
+            src={image}
+            alt="Event Cover"
+            className="w-full h-full object-cover object-center"
+          />
         </div>
 
-        {/* Main Content */}
-        <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-          {/* Event Description */}
-          <div className="text-primary-content relative">
-            <h2 className="text-4xl mb-4 bg-black bg-opacity-50 text-neutral-content rounded-lg px-10 py-2 inline-block max-w-full text-left mx-auto">
-              {venues?.venue_name}, {venues?.location.city}
-            </h2>
-            <h2 className="text-4xl mb-4 bg-black bg-opacity-50 text-neutral-content rounded-lg px-10 py-2 inline-block max-w-full text-left mx-auto">
-              {hour} hrs
-            </h2>
-            <h1 className="text-6xl font-bold mb-4 bg-black bg-opacity-50 text-neutral-content rounded-lg px-10 py-2 inline-block max-w-full text-left mx-auto ">
-              {name}
-            </h1>
+        {/* Content Container */}
+        <div className="relative z-20 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex h-full items-end pb-16">
+            <div className="flex flex-col md:flex-row gap-8 items-end w-full">
+              {/* Event Info */}
+              <div className="flex-1 space-y-4">
+                <div className="flex items-center gap-2 text-white/90">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" />
+                  </svg>
+                  <span className="text-lg font-medium">
+                    {venues?.venue_name}, {venues?.location.city}
+                  </span>
+                </div>
+                
+                <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight">
+                  {name}
+                </h1>
+                
+                <div className="flex items-center gap-2 text-white/90">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" />
+                  </svg>
+                  <span className="text-lg">
+                    {new Date(date!).toLocaleDateString('en-GB', {
+                      weekday: 'long',
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric'
+                    })} - {hour} hrs
+                  </span>
+                </div>
+              </div>
 
-            <div className="ml-auto md:w-96 sm:w-full text-black bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-lg font-bold mb-6">Ticket Prices</h2>
-              <table className="w-full gap-y-2">
-                <thead>
-                  <tr>
-                    <th className="text-left">Type</th>
-                    <th className="text-center"></th>
-                    <th className="text-right">Price</th>
-                  </tr>
-                </thead>
-                <tbody>
+              {/* Ticket Card */}
+              <div className="w-full md:w-96 bg-white rounded-xl shadow-2xl p-6 transform transition-all duration-300 hover:scale-[1.02]">
+                <h2 className="text-xl font-bold text-gray-900 mb-6">Ticket Information</h2>
+                <div className="space-y-4">
                   {zonePriceList.length > 0 ? (
                     zonePriceList.map(zoneItem => (
-                      <tr key={zoneItem.zone}>
-                        <th className="text-left font-normal">{zoneItem.zone}</th>
-                        <th className="text-center font-normal">Starting prices from</th>
-                        <th>
-                          <a className="font-bold" style={{ fontSize: '14px' }}>
-                            ${Math.min(...zoneItem.prices.map((price: any) => price.priceFinal))} USD
-                          </a>
-                        </th>
-                      </tr>
+                      <div key={zoneItem.zone} className="flex justify-between items-center py-2 border-b border-gray-100">
+                        <div>
+                          <p className="font-medium text-gray-900">{zoneItem.zone}</p>
+                          <p className="text-sm text-gray-500">Starting from</p>
+                        </div>
+                        <span className="text-xl font-bold text-gray-900">
+                          ${Math.min(...zoneItem.prices.map((price: any) => price.priceFinal))}
+                        </span>
+                      </div>
                     ))
                   ) : (
-                    <tr>
-                      <th className="text-left font-normal">All Zones</th>
-                      <th className="text-center font-normal">Various locations available</th>
-                      <th>
-                        <a className="font-bold text-blue-600 hover:text-blue-800" style={{ fontSize: '14px' }}>
-                          Check seat map
-                        </a>
-                      </th>
-                    </tr>
+                    <div className="flex justify-between items-center py-2">
+                      <div>
+                        <p className="font-medium text-gray-900">All Zones</p>
+                        <p className="text-sm text-gray-500">Various locations available</p>
+                      </div>
+                      <button className="text-blue-600 hover:text-blue-800 font-medium">
+                        View Map
+                      </button>
+                    </div>
                   )}
-                </tbody>
-              </table>
-              {/* Buy Tickets Button */}
-              <div className="mt-6">
-                <Link
-                  to={`/sale/${name}/${venues?.venue_label}/${venues?.location.city}/${date}/${label}/${deleteParam}`}
-                  state={{
-                    eventName: name,
-                    eventHour: hour,
-                    eventDescription: description,
-                    venueName: venues?.venue_name,
-                    venueCity: venues?.location.city,
-                    saleStartsAt: saleStartsAt
-                  }}
-                  className={`btn ${isSaleActive ? 'btn-active bg-blue-500 hover:bg-blue-600' : 'btn-disabled bg-gray-400'} text-white py-2 px-4 rounded w-full`}
-                >
-                  {isSaleActive ? 'Buy Tickets!' : `Tickets available on ${saleStartsAt}`}
-                </Link>
+                  
+                  <Link
+                    to={`/sale/${name}/${venues?.venue_label}/${venues?.location.city}/${date}/${label}/${deleteParam}`}
+                    state={{
+                      eventName: name,
+                      eventHour: hour,
+                      eventDescription: description,
+                      venueName: venues?.venue_name,
+                      venueCity: venues?.location.city,
+                      saleStartsAt: saleStartsAt
+                    }}
+                    className={`w-full mt-4 px-6 py-3 rounded-lg text-center font-semibold transition-all
+                      ${isSaleActive 
+                        ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                        : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                      }`}
+                  >
+                    {isSaleActive 
+                      ? 'Get Tickets' 
+                      : `Sales start ${new Date(saleStartsAt!).toLocaleDateString()}`
+                    }
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      
+      {/* Rest of the content */}
       <div className="w-full bg-white">
         <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
           {/* Event Details Grid */}
