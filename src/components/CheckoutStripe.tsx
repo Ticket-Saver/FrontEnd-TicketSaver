@@ -109,12 +109,23 @@ const CheckoutStripe = () => {
         return
       }
 
+      // Usar la misma API de eventos para el checkout
+      const apiUrl = import.meta.env.VITE_HIEVENTS_API_URL
+      if (!apiUrl) {
+        console.error('VITE_HIEVENTS_API_URL no está definida')
+        throw new Error('Error de configuración: URL de API no definida')
+      }
+
+      console.log('URL de la API:', apiUrl)
+
       // En cualquier otro caso, usar Stripe real
       console.log('Usando Stripe real en:', import.meta.env.MODE)
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/create-checkout-session`, {
+      const response = await fetch(`${apiUrl}checkout/create-session`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_TOKEN_HIEVENTS}`
         },
         body: JSON.stringify({ 
           cart: cart.map(item => ({
