@@ -19,6 +19,15 @@ interface Cart {
 
 export default function TicketSelectionNoSeat() {
   const { name, venue, date, location, label } = useParams()
+  
+  console.log('Parámetros disponibles:', {
+    name,    // nombre del evento
+    venue,   // ID o identificador del venue
+    date,    // fecha del evento
+    location, // ubicación
+    label    // identificador o etiqueta del evento
+  })
+
   const githubApiUrl = `${import.meta.env.VITE_GITHUB_API_URL as string}/events/${label}/zone_price.json`
   const githubApiUrl2 = `${import.meta.env.VITE_GITHUB_API_URL as string}/venues.json`
 
@@ -38,7 +47,7 @@ export default function TicketSelectionNoSeat() {
   const navigate = useNavigate()
   const [ticketData, setTicketData] = useState(null)
   const token2 = import.meta.env.VITE_TOKEN_HIEVENTS
-
+  const hieventsUrl = `${import.meta.env.VITE_HIEVENTS_API_URL as string}`
   // Cargar la imagen del evento
   useEffect(() => {
     const loadImage = async () => {
@@ -83,7 +92,7 @@ export default function TicketSelectionNoSeat() {
       try {
         // Primer intento: Nuevo endpoint de tickets
         const ticketsResponse = await fetch(
-          'https://localhost:8443/api/events/1/tickets?page=1&per_page=20&query=&sort_by=&sort_direction=',
+          `${hieventsUrl}events/${venue}/tickets?page=1&per_page=20&query=&sort_by=order&sort_direction=asc&position=&seat_number=&section=`,
           {
             headers: {
               Accept: 'application/json',
