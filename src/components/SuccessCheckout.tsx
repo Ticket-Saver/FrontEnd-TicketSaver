@@ -48,27 +48,27 @@ const SuccessCheckout = () => {
         setLoading(true)
         const attendeesDataStr = localStorage.getItem('attendees_data')
         console.log('Datos recuperados del localStorage:', attendeesDataStr)
-        
+
         if (!attendeesDataStr) {
           throw new Error('No se encontraron datos de asistentes en localStorage')
         }
 
         const attendeesData = JSON.parse(attendeesDataStr)
         console.log('Datos parseados:', attendeesData)
-        
+
         if (!attendeesData.attendees || !attendeesData.cart || !attendeesData.eventInfo) {
           console.error('Datos incompletos:', attendeesData)
           throw new Error('Datos de asistentes incompletos')
         }
 
         const token2 = import.meta.env.VITE_TOKEN_HIEVENTS
-        
+
         // Procesar cada asistente de forma secuencial
         const results = []
         for (let index = 0; index < attendeesData.cart.length; index++) {
           const ticket = attendeesData.cart[index]
           const attendee = attendeesData.attendees[index]
-          
+
           // Intentar registrar el asistente con reintentos
           let attempts = 0
           let success = false
@@ -96,8 +96,8 @@ const SuccessCheckout = () => {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'Authorization': `Bearer ${token2}`
+                    Accept: 'application/json',
+                    Authorization: `Bearer ${token2}`
                   },
                   body: JSON.stringify(attendeeData)
                 }
@@ -138,13 +138,15 @@ const SuccessCheckout = () => {
           }
 
           if (!success) {
-            throw new Error(`Error al registrar asistente después de ${attempts} intentos: ${JSON.stringify(lastError)}`)
+            throw new Error(
+              `Error al registrar asistente después de ${attempts} intentos: ${JSON.stringify(lastError)}`
+            )
           }
 
           // Esperar un momento entre registros
           await new Promise(resolve => setTimeout(resolve, 500))
         }
-        
+
         // Usar el primer resultado para mostrar en la UI
         if (results.length > 0) {
           const firstResult = results[0]
@@ -186,7 +188,6 @@ const SuccessCheckout = () => {
         // Limpiar los datos del localStorage
         localStorage.removeItem('attendees_data')
         localStorage.removeItem('cart_checkout')
-
       } catch (err) {
         console.error('Error general:', err)
         setError(err instanceof Error ? err.message : 'Error desconocido')

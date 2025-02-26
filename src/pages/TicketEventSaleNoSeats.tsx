@@ -19,13 +19,13 @@ interface Cart {
 
 export default function TicketSelectionNoSeat() {
   const { name, venue, date, location, label } = useParams()
-  
+
   console.log('Parámetros disponibles:', {
-    name,    // nombre del evento
-    venue,   // ID o identificador del venue
-    date,    // fecha del evento
+    name, // nombre del evento
+    venue, // ID o identificador del venue
+    date, // fecha del evento
     location, // ubicación
-    label    // identificador o etiqueta del evento
+    label // identificador o etiqueta del evento
   })
 
   const githubApiUrl = `${import.meta.env.VITE_GITHUB_API_URL as string}/events/${label}/zone_price.json`
